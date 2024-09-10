@@ -8,16 +8,13 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
-// 启用 CORS，允许所有来源的请求
-app.use(cors()); // 保持这个
-
-// 处理 OPTIONS 请求
-app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  res.send();
-});
+// 启用 CORS 并设置 Access-Control-Allow-Origin 为所有请求
+app.use(cors({
+  origin: '*', // 允许所有来源的请求，如果需要可以改为特定域名
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // 允许的方法
+  allowedHeaders: ['Content-Type', 'Authorization'], // 允许的请求头
+  credentials: true, // 允许发送凭据
+}));
 
 // 获取环境变量中的 Feishu 应用信息
 const APP_ID = process.env.APP_ID; // 你的 Feishu 应用 ID
