@@ -1,4 +1,3 @@
-// 引入所需模块
 const cors = require('cors');  // 引入 CORS 模块
 const express = require('express');
 const axios = require('axios');
@@ -8,12 +7,11 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
-// 启用 CORS 并设置 Access-Control-Allow-Origin 为所有请求
+// 启用 CORS，允许来自所有来源的请求
 app.use(cors({
-  origin: '*', // 允许所有来源的请求，如果需要可以改为特定域名
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // 允许的方法
-  allowedHeaders: ['Content-Type', 'Authorization'], // 允许的请求头
-  credentials: true, // 允许发送凭据
+    origin: '*', // 允许所有来源的跨域请求
+    methods: ['GET', 'POST'], // 允许的请求方法
+    allowedHeaders: ['Content-Type', 'Authorization'] // 允许的请求头
 }));
 
 // 获取环境变量中的 Feishu 应用信息
