@@ -1,9 +1,16 @@
+
+// 引入模块
+const cors = require('cors'); // 引入 CORS 模块
 const express = require('express');
 const axios = require('axios');
 const bodyParser = require('body-parser');
 
 const app = express();
 app.use(bodyParser.json());
+
+// 启用 CORS，允许所有来源的请求
+app.use(cors()); // 添加这行代码以启用 CORS
+
 
 const APP_ID = process.env.APP_ID; // 你的 Feishu 应用 ID
 const APP_SECRET = process.env.APP_SECRET;// 你的 Feishu 应用密钥
