@@ -1,22 +1,21 @@
-
-// 引入模块
-const cors = require('cors'); // 引入 CORS 模块
+// 引入所需模块
+const cors = require('cors');  // 引入 CORS 模块
 const express = require('express');
 const axios = require('axios');
 const bodyParser = require('body-parser');
 
+// 初始化 express 应用
 const app = express();
 app.use(bodyParser.json());
 
 // 启用 CORS，允许所有来源的请求
-app.use(cors()); // 添加这行代码以启用 CORS
+app.use(cors());
 
-
+// 获取环境变量中的 Feishu 应用信息
 const APP_ID = process.env.APP_ID; // 你的 Feishu 应用 ID
-const APP_SECRET = process.env.APP_SECRET;// 你的 Feishu 应用密钥
-const APP_TOKEN = process.env.APP_TOKEN;// 飞书多维表格的 app_token
+const APP_SECRET = process.env.APP_SECRET; // 你的 Feishu 应用密钥
+const APP_TOKEN = process.env.APP_TOKEN; // 飞书多维表格的 app_token
 const TABLE_ID = process.env.TABLE_ID; // 飞书表格的 table_id
-
 
 // 获取 Feishu Access Token
 async function getAccessToken() {
@@ -27,7 +26,7 @@ async function getAccessToken() {
     });
     return response.data.app_access_token;
   } catch (error) {
-    console.error('获取Access Token时出错:', error);
+    console.error('获取 Access Token 时出错:', error);
     throw error;
   }
 }
@@ -37,6 +36,7 @@ app.post('/submit-form', async (req, res) => {
   try {
     const data = req.body;
 
+    // 获取 Access Token
     const accessToken = await getAccessToken();
 
     // 构建要插入的数据，使用你的 field_id
@@ -79,6 +79,7 @@ app.post('/submit-form', async (req, res) => {
   }
 });
 
+// 设置服务器监听端口
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`服务器运行在端口 ${PORT}`);
